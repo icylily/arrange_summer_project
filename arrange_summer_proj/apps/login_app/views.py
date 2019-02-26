@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect,HttpResponse
 from django.contrib import messages
 from .models import *
 import bcrypt
-from apps.trip_app.models import Trip
+from apps.admin_app.models import Admin
 
 # Create your views here.
 
@@ -63,14 +63,14 @@ def success(request):
     if not("logined" in request.session):
         return render(request, "trip_app/dashboard.html")
     current_user = User.objects.get(id=int(request.session["current_user"]))
-    context={
-        "all_the_trips":Trip.objects.all(),
-        "user":User.objects.get(id=int(request.session["current_user"])),
-        "other_users": User.objects.exclude(id=int(request.session["current_user"])),
-        "your_trips": Trip.objects.filter(user_created_by=int(request.session["current_user"])),
-        "other_trips": Trip.objects.exclude(user_created_by=int(request.session["current_user"])),
-    }
-    return render(request, "trip_app/dashboard.html", context)
+    # context={
+    #     "all_the_trips":Trip.objects.all(),
+    #     "user":User.objects.get(id=int(request.session["current_user"])),
+    #     "other_users": User.objects.exclude(id=int(request.session["current_user"])),
+    #     "your_trips": Trip.objects.filter(user_created_by=int(request.session["current_user"])),
+    #     "other_trips": Trip.objects.exclude(user_created_by=int(request.session["current_user"])),
+    # }
+    return render(request, "trip_app/dashboard.html")
 
 def logout(request):
     del request.session["logined"]

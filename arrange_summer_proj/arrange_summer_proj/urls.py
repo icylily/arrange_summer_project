@@ -1,3 +1,4 @@
+from django.conf.urls import url, include
 """arrange_summer_proj URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -13,9 +14,17 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
-from django.contrib import admin
+# from django.conf.urls import url
+# from django.contrib import admin
+
+# urlpatterns = [
+#     url(r'^admin/', admin.site.urls),
+# ]
+# from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^', include("apps.login_app.urls")),
+    url(r'^admin/', include('apps.admin_app.urls')),
+    # url(r'^courses/', include('apps.course_app.urls')),
+    # url(r'^plans/', include('apps.plan_app.urls')),
 ]

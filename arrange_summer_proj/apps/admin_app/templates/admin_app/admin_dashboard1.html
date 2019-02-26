@@ -26,7 +26,7 @@
       <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
+          <a class="nav-link" href="/admin/logout">Sign out</a>
         </li>
       </ul>
     </nav>
@@ -43,7 +43,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/admin/manage_admins">
                   <!-- <span data-feather="file"></span> -->
                   <span data-feather="users"></span>
                   Admins manage
@@ -72,6 +72,105 @@
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
           {%if request.session.source == "login"%}
              Courses list
+          {%elif request.session.source == "manage_admins"%}
+            <h2>Manage Admins</h2>
+        
+          </div>
+          {%if  request.session.username != 'Super_Admin'%}
+            <h2> Only supper admin could manage other admins!!</h2>
+          {%else%}
+          <div class="row">
+            <div class= "col-3">
+            <table class="table  table-bordered table-bordered table-striped">
+              <tr class="col-1">
+                <th>
+                  <p>Username</p>
+                </th>
+                <th>
+                  <p>Action</p>
+                </th>
+              </tr>
+              {% for admin in admin_list %}
+                <tr>
+                  <td>
+                    <p>{{ admin.username }}</p>
+                  </td>
+                  <td>
+                    <p> <a href="/admin/delete/{{ admin.id }}"> Delete</a>|<a href="/admin/reset_password/{{ admin.id }}"> Reset Password</a> </p>
+                  </td>
+                </tr>
+             
+                {% endfor %}
+                </table>
+                </div>
+                </div>
+              <div class="row">
+                <form class="needs-validation" action="/admin/add_admin" method="POST" novalidate>
+                  {% csrf_token %}
+                  <button class="btn btn-primary btn-lg mb-3" type="submit">Add an Admin</button>
+                </form>
+              </div>
+            {%endif%}
+          {% elif request.session.source == "add_admin"%}
+              <h2>Add an admin</h2></div>
+              <div class="col-md-5 ml-4">
+                <!-- <h4 class="mb-3">Login</h4> -->
+                <form class="needs-validation" action="/admin/process/add_admin" method="POST" novalidate>
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label for="username">Username </label>
+                    <input type="text" class="form-control" name="username" id="username" 
+                      placeholder="username" >
+                    <div class="text-danger">
+                      {% if messages %}
+                      <ul> {% for message in messages %}
+                        {% if 'username' in message.extra_tags %}
+                        <li>
+                          <p class="text-danger small">{{message}}</p>
+                        </li>
+                        {% endif %}
+                        {% endfor %}</ul>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="password">Password </label>
+                    <input type="password" class="form-control" name="password" id="password"
+                      placeholder="please input a password">
+                    <div class="text-danger">
+                      {% if messages %}
+                      <ul> {% for message in messages %}
+                        {% if 'password' in message.extra_tags %}
+                        <li>
+                          <p class="text-danger small">{{message}}</p>
+                        </li>
+                        {% endif %}
+                        {% endfor %}</ul>
+                      {% endif %}
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="confirm_password">Confirm password </label>
+                    <input type="password" class="form-control" name="confirm_password" id="confirm_password"
+                      placeholder="please re-enter the password">
+                    <div class="text-danger">
+                      {% if messages %}
+                      <ul> {% for message in messages %}
+                        {% if 'confirm_password' in message.extra_tags %}
+                        <li>
+                          <p class="text-danger small">{{message}}</p>
+                        </li>
+                        {% endif %}
+                        {% endfor %}</ul>
+                      {% endif %}
+                    </div>
+                  </div>
+              
+                  <button class="btn btn-primary btn-lg btn-block" type="submit">Add</button>
+                </form>
+                <!-- </div> -->
+              </div>
           {%elif request.session.source == "change_password_success"%}
               <h2>Changed password successfully!</h2>
           {%elif request.session.source == "change_password"%}
@@ -138,8 +237,8 @@
               <!-- </div> -->
             </div>
             
-          {%elif request.session.source == "manage_admin"%}
-            manage_admin
+          {%elif request.session.source == "other"%}
+            other
           {%endif%}
 
          

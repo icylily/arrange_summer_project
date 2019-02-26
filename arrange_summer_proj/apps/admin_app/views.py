@@ -21,7 +21,7 @@ def index(request):
         # this_password = request.POST["password"]
         super_admin = Admin.objects.create(
             username="Super_Admin",  password=this_password,admin_type=1)
-        print(super_admin)
+        # print(super_admin)
 
     return render(request,"admin_app/index.html")
     # return render(request, "login_app/index.html")
@@ -70,8 +70,35 @@ def process_change_password(request):
         return redirect("/admin/login_success")
 
 
+def process_add_admin(request):
+    errors = Admin.objects.basic_validator(request.POST)
+    if len(errors) > 0:
+        # if the errors dictionary contains anything, loop through each key-value pair and make a flash message
+        for key, value in errors.items():
+            messages.error(request, value, extra_tags=key)
+            print(messages)
+        # redirect the user back to the form to fix the errors
+        return redirect('/admin/login_success')
+    else:
+        #set session
+        
+        this_password = bcrypt.hashpw(
+            request.POST["password"].encode(), bcrypt.gensalt())
+        this_admin = Admin.objects.create(
+            username=request.POST["username"],  password=this_password, admin_type=2)
+        print(this_admin)
+        
+        request.session["source"] = "manage_admins"
+        return redirect("/admin/login_success")
+
 def login_success(request):
     
+    if request.session["source"] == 'manage_admins':
+        admin_list = Admin.objects.filter(admin_type = 2)
+        context ={
+            "admin_list" : admin_list,
+        }
+        return render(request, "admin_app/admin_dashboard1.html",context)
 
     return  render(request,"admin_app/admin_dashboard1.html")
 
@@ -79,3 +106,40 @@ def login_success(request):
 def change_password(request):
     request.session["source"] = 'change_password'
     return redirect("/admin/login_success")
+
+
+def manage_admins(request):
+    request.session["source"] = 'manage_admins'
+    return redirect("/admin/login_success")
+
+
+def add_admin(request):
+    request.session["source"] = 'add_admin'
+    return redirect("/admin/login_success")
+
+
+def delete_an_admin(request, admin_id):
+    if (not ("logined" in request.session)) or (request.session["logined"] != "yes") or(request.session["logined_type"]!=1):
+        return render(request,"admin_app/warning.html")
+    this_admin = Admin.objects.filter(id= int(admin_id))[0]
+    this_admin.delete()
+    return redirect("/admin/login_success")
+
+
+def reset_password(request,admin_id):
+    if (not ("logined" in request.session)) or (request.session["logined"] != "yes") or(request.session["logined_type"] != 1):
+        return render(request, "admin_app/warning.html")
+    this_admin = Admin.objects.filter(id=int(admin_id))[0]
+    this_password = bcrypt.hashpw(
+        '12345678'.encode(), bcrypt.gensalt())
+    this_admin.password = this_password
+    this_admin.save()
+    return redirect("/admin/login_success")
+
+
+def logout(request):
+    del request.session["logined"]
+    del request.session["source"]
+    del request.session["logined_type"]
+    del request.session["username"]
+    return redirect("/admin")

@@ -7,5 +7,11 @@ urlpatterns = [
     url(r'^login_success$',views.login_success),
     url(r'^change_password',views.change_password),
     url(r'^process/change_password$', views.process_change_password),
+    url(r'^manage_admins$', views.manage_admins),
+    url(r'^add_admin$', views.add_admin),
+    url(r'^process/add_admin$', views.process_add_admin),
+    url(r'^delete/(?P<admin_id>\d+)$', views.delete_an_admin),
+    url(r'^reset_password/(?P<admin_id>\d+)$', views.reset_password),
+    url(r'^logout$',views.logout),
    
 ]

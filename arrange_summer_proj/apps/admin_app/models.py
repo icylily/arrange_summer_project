@@ -16,8 +16,8 @@ class ShowManager(models.Manager):
             errors["username"] = "Admin's username should be at least 5 characters."
         if len(postData["password"]) < 8:
             errors["password"] = "Passworsd should be at least 8 characters"
-        if postData["password"] != postData["re_password"]:
-            errors["re_password"] = "Please re-enter the same password!"
+        if postData["password"] != postData["confirm_password"]:
+            errors["confirm_password"] = "Please re-enter the same password!"
         if len(self.filter(username=postData["username"])) > 0:
             errors["username"] = "This  admin already existed!"
 

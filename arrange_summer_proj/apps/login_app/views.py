@@ -60,9 +60,9 @@ def process_login(request):
     
 def success(request):
     # if user not logined yet , don't returun any list
-    if not("logined" in request.session):
-        return render(request, "trip_app/dashboard.html")
-    current_user = User.objects.get(id=int(request.session["current_user"]))
+    # if not("logined" in request.session):
+    #     return render(request, "trip_app/dashboard.html")
+    # current_user = User.objects.get(id=int(request.session["current_user"]))
     # context={
     #     "all_the_trips":Trip.objects.all(),
     #     "user":User.objects.get(id=int(request.session["current_user"])),
@@ -70,7 +70,7 @@ def success(request):
     #     "your_trips": Trip.objects.filter(user_created_by=int(request.session["current_user"])),
     #     "other_trips": Trip.objects.exclude(user_created_by=int(request.session["current_user"])),
     # }
-    return render(request, "trip_app/dashboard.html")
+    return render(request, "plan_app/plan_dashboard.html")
 
 def logout(request):
     del request.session["logined"]

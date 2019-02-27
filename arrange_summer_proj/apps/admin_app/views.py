@@ -6,6 +6,7 @@ from django.contrib import messages
 from .models import *
 import bcrypt
 from apps.login_app.models import User
+from apps.course_app.models import Course
 
 # need to do
 # from apps.course_app.models import Course
@@ -98,9 +99,15 @@ def login_success(request):
         context ={
             "admin_list" : admin_list,
         }
-        return render(request, "admin_app/admin_dashboard1.html",context)
+        return render(request, "admin_app/admin_dashboard.html",context)
+    elif request.session["source"] =='login':
+        course_list =Course.objects.all()
+        context={
+            "course_list":course_list
+        }
+        return render(request, "admin_app/admin_dashboard.html", context)
 
-    return  render(request,"admin_app/admin_dashboard1.html")
+    return  render(request,"admin_app/admin_dashboard.html")
 
 
 def change_password(request):
@@ -143,3 +150,34 @@ def logout(request):
     del request.session["logined_type"]
     del request.session["username"]
     return redirect("/admin")
+
+
+def manage_courses(request):
+    request.session["source"] = 'login'
+    return redirect("/admin/login_success")
+
+
+def add_course(request):
+    request.session["source"] = 'add_course'
+    return redirect("/admin/login_success")
+
+
+def process_add_course(request):
+    this_admin = Admin.objects.filter(username=request.session["username"])[0]
+    this_course = Course.objects.create(
+        name=request.POST["name"], category=request.POST["category"], location=request.POST["location"], 
+        start_age=request.POST["start_age"], end_age=request.POST["end_age"], start_date=request.POST["start_date"],
+        end_date=request.POST["end_date"], start_time=request.POST["start_time"], end_time=request.POST["end_time"], 
+        description=request.POST["description"], admin_created_by=this_admin)
+    request.session["source"] = 'login'
+    return redirect("/admin/login_success")
+
+
+def delete_course(request,course_id):
+    this_course = Course.objects.filter(id=int(course_id))[0]
+    this_course.delete()
+    request.session["source"] = 'login'
+    return redirect("/admin/login_success")
+
+
+

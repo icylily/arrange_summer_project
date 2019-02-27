@@ -13,5 +13,9 @@ urlpatterns = [
     url(r'^delete/(?P<admin_id>\d+)$', views.delete_an_admin),
     url(r'^reset_password/(?P<admin_id>\d+)$', views.reset_password),
     url(r'^logout$',views.logout),
+    url(r'^manage_courses$', views.manage_courses),
+    url(r'^add_course$', views.add_course),
+    url(r'^process/add_course$',views.process_add_course),
+    url(r'^delete_course/(?P<course_id>\d+)$',views.delete_course),
    
 ]

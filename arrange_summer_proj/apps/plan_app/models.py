@@ -36,7 +36,7 @@ class Plan(models.Model):
     user_created_by = models.ForeignKey(
         "login_app.User", related_name="created_plans")
     included_courses = models.ManyToManyField(
-        "course_app.Course", related_name="referenced_courses")
+        "course_app.Course", related_name="referenced_plans")
     description = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -9,4 +9,5 @@ urlpatterns = [
     # delete_course_from_plan/1/1
     url(r'^delete_course_from_plan/(?P<plan_id>\d+)/(?P<course_id>\d+)$',
         views.delete_course_from_plan),
+    url(r'^process/add_plan$', views.process_add_plan),
 ]

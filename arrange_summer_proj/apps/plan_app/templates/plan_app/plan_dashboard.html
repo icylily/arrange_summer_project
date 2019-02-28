@@ -38,7 +38,7 @@
         </header>
         <div class="row">
             <div class="content-right">
-                <h2>Your plans</h2>
+                <!-- <h2>Your plans</h2> -->
                 {%for plan in plan_list%}
                 <table class="table table-striped table-bordered table-bordered">
                     <tr>
@@ -75,6 +75,9 @@
                             <p>Course Name</p>
                         </th>
                         <th>
+                            <p>Category</p>
+                        </th>
+                        <th>
                             <p>Location</p>
                         </th>
                         <th>
@@ -96,6 +99,9 @@
                                 <p>{{course.name}}</p>
                             </td>
                             <td>
+                                <p>{{course.category}}</p>
+                            </td>
+                            <td>
                                 <p>{{course.location}}</p>
                             </td>
                             <td>
@@ -113,6 +119,7 @@
                         </tr>
                     {%endfor%}
                 </table>
+                <div class="row border-bottom my-3 border-dark"></div>
                 {%endfor%}
             </div>
         </div>

@@ -28,6 +28,7 @@
                 </div>
 
                 <div class="col-6 d-flex justify-content-end align-items-center">
+                    <a class="btn btn-sm btn-outline-secondary" href="/success">Go Back</a>&nbsp;&nbsp;&nbsp;&nbsp;
                     <a class="btn btn-sm btn-outline-secondary" href="/logout">Log out</a>&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
             </div>
@@ -35,7 +36,41 @@
         <div class="row">
             <div class="content-right">
                 <h2>Create a New Plan</h2>
-                
+                <form action="/plan/process/add_plan" method="POST">
+                    {% csrf_token %}
+                    <fieldset>
+                        <label for="name ">name</label>
+                        <input type="text" class="form-control" name="name" placeholder="Plan's name" value="" required>
+                        <!-- <div class="text-danger">
+                            {% if messages %}
+                            <ul> {% for message in messages %}
+                                {% if 'destination' in message.extra_tags %}
+                                <li>
+                                    <p class="text-danger small">{{message}}</p>
+                                </li>
+                                {% endif %}
+                                {% endfor %}</ul>
+                            {% endif %}
+                        </div> -->
+                        <label for="description ">Description</label>
+                        <textarea class="form-control" name="description" placeholder="Add your description" value="" cols="100" rows="5"></textarea>
+                        <!-- <div class="text-danger md-3">
+                            {% if messages %}
+                            <ul> {% for message in messages %}
+                                {% if 'plan' in message.extra_tags %}
+                                <li>
+                                    <p class="text-danger small">{{message}}</p>
+                                </li>
+                                {% endif %}
+                                {% endfor %}</ul>
+                            {% endif %}
+                        </div> -->
+                        
+                        <p class="text-right">
+                            <a class="btn btn-primary btn-lg  my-3" href="/success">Cancel</a>
+                            <button class="btn btn-primary btn-lg  my-3 " type="submit">Submit</button></p>
+                    </fieldset>
+                </form>
             </div>
         </div>
         {%else%}

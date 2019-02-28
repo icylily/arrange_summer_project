@@ -4,6 +4,8 @@ from django.contrib import messages
 from .models import *
 import bcrypt
 from apps.admin_app.models import Admin
+from apps.course_app.models import Course
+from apps.plan_app.models import Plan
 
 # Create your views here.
 
@@ -60,17 +62,17 @@ def process_login(request):
     
 def success(request):
     # if user not logined yet , don't returun any list
-    # if not("logined" in request.session):
-    #     return render(request, "trip_app/dashboard.html")
-    # current_user = User.objects.get(id=int(request.session["current_user"]))
-    # context={
-    #     "all_the_trips":Trip.objects.all(),
-    #     "user":User.objects.get(id=int(request.session["current_user"])),
-    #     "other_users": User.objects.exclude(id=int(request.session["current_user"])),
-    #     "your_trips": Trip.objects.filter(user_created_by=int(request.session["current_user"])),
-    #     "other_trips": Trip.objects.exclude(user_created_by=int(request.session["current_user"])),
-    # }
-    return render(request, "plan_app/plan_dashboard.html")
+    if not("logined" in request.session):
+        return render(request, "plan_app/plan_dashboard.html")
+    current_user = User.objects.get(id=int(request.session["current_user"]))
+    context={
+        "plan_list": current_user.created_plans.all(),
+        # "user":User.objects.get(id=int(request.session["current_user"])),
+        # "other_users": User.objects.exclude(id=int(request.session["current_user"])),
+        # "your_trips": Trip.objects.filter(user_created_by=int(request.session["current_user"])),
+        # "other_trips": Trip.objects.exccreated_plans.lude(user_created_by=int(request.session["current_user"])),
+    }
+    return render(request, "plan_app/plan_dashboard.html",context)
 
 def logout(request):
     del request.session["logined"]

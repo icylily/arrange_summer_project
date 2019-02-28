@@ -39,6 +39,7 @@
         <div class="row">
             <div class="content-right">
                 <h2>Your plans</h2>
+                {%for plan in plan_list%}
                 <table class="table table-striped table-bordered table-bordered">
                     <tr>
                         <th>
@@ -51,41 +52,71 @@
                         <th>
                             <p>Action</p>
                         </th>
-
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>{{plan.name}} </p>
+                        </td>
+                        <td>
+                            <p>{{plan.description}} </p>
+                        </td>
+                        <td>
+                            <a href="/plan/add_course/{{plan.id}}">Add course</a>|
+                            <a href="/plan/delete/{{plan.id}}">Delete</a>|
+                            <a href="#">Calendar View</a>|
+                            <a href="#">Report View</a>
+                        </td>
                     </tr>
                 </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="content-right">
-                
+                <h4>Included Courses</h4>
                 <table class="table table-striped table-bordered table-bordered">
                     <tr>
                         <th>
-                            <p>Course name</p>
-                        </th>
-                        <th>
-                            <p>Start Date</p>
-                        </th>
-                        <th>
-                            <p>End Date</p>
+                            <p>Course Name</p>
                         </th>
                         <th>
                             <p>Location</p>
                         </th>
                         <th>
+                            <p>Date</p>
+                        </th>
+                        <th>
                             <p>Time</p>
+                        </th>
+                        <th>
+                            <p>Description</p>
                         </th>
                         <th>
                             <p>Action</p>
                         </th>
-
                     </tr>
-                  
-
+                    {%for course in plan.included_courses.all%}
+                        <tr>
+                            <td>
+                                <p>{{course.name}}</p>
+                            </td>
+                            <td>
+                                <p>{{course.location}}</p>
+                            </td>
+                            <td>
+                                <p>{{course.start_date}}-{{course.end_date}} </p>
+                            </td>
+                            <td>
+                                <p>{{course.start_time}}-{{course.end_time}}</p>
+                            </td>
+                            <td>
+                                <p>{{course.description}}</p>
+                            </td>
+                            <td>
+                                <p> <a href="/plan/delete_course_from_plan/{{plan.id}}/{{course.id}}">Delete from this plan</a> </p>
+                            </td>
+                        </tr>
+                    {%endfor%}
                 </table>
+                {%endfor%}
             </div>
         </div>
+        
         {%else%}
         <header class="blog-heade.first_namer py-3">
             <div class="row flex-nowrap justify-content-between align-items-center">

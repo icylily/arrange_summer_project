@@ -15,4 +15,7 @@ urlpatterns = [
         views.add_course_to_plan),
     url(r'^delete_course1/(?P<plan_id>\d+)/(?P<course_id>\d+)$',
         views.delete_course1),
+    # / plan/calendar_view/{{plan.id}}
+    url(r'^calendar_view/(?P<plan_id>\d+)$',views.calendar_view),
+    url(r'^delete/(?P<plan_id>\d+)$', views.delete_plan),
 ]

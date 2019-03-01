@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calendar View</title>
+    <!-- Bootstrap core CSS -->
+    {%load static%}
+    <link href="{% static 'login_app/css/bootstrap.min.css'%}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <link href="{% static 'login_app/css/blog.css'%}" rel="stylesheet">
+    <link href="{% static 'login_app/fullcalendar-3.10.0/fullcalendar.css'%}" rel='stylesheet' />
+    <link href="{% static 'login_app/fullcalendar-3.10.0/fullcalendar.print.css'%}" rel='stylesheet' media='print' />
+    <script src="{% static 'login_app/fullcalendar-3.10.0/lib/moment.min.js'%}"></script>
+    <script src="{% static 'login_app/fullcalendar-3.10.0/lib/jquery.min.js'%}"></script>
+    <script src="{% static 'login_app/fullcalendar-3.10.0/fullcalendar.min.js'%}"></script>
+</head>
+
+<body class="bg-light">
+
+    <div class="container">
+        {%if "current_user" in request.session%}
+        <header class="blog-header py-3">
+            <div class="row flex-nowrap justify-content-between align-items-center">
+                <!-- My template!! -->
+                <div class="col-4 pt-1">
+                    <p class="text-left">Welcome:&nbsp{{request.session.first_name}}&nbsp{{request.session.last_name}}
+                    </p>
+                </div>
+
+                <div class="col-6 d-flex justify-content-end align-items-center">
+                    <a class="btn btn-sm btn-outline-secondary" href="/success">Go Back</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-sm btn-outline-secondary" href="/logout">Log out</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+            </div>
+        </header>
+        <div class="row">
+            <div class="content-right">
+                <h2>View Calendar</h2>
+            <div id='calendar'></div>
+            </div>
+        </div>
+        {%else%}
+        <header class="blog-heade.first_namer py-3">
+            <div class="row flex-nowrap justify-content-between align-items-center">
+                <!-- My template!! -->
+                <div class="col-1 pt-1">
+                    <p class="text-left"></p>
+                </div>
+                <div class="col-6 pt-1">
+                    <p class="blog-header-logo text-dark text-center">
+                        Warning </p>
+                    <!-- Success.Welcome.{{request.session.first_name}}&nbsp{{request.session.last_name}} </p> -->
+                </div>
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    <!-- <a class="btn btn-sm btn-outline-secondary" href="/">Go back</a> -->
+                </div>
+            </div>
+        </header>
+        <h1 class="blog-header-logo text-warning">You are not logged in yet and cannot access this page.Please return to
+            login
+        </h1>
+        <a class="btn btn-sm btn-outline-secondary" href="/">Go back</a>
+        {%endif%}
+    </div>
+    <!--end container -->
+
+</body>
+<script>
+    var event = {{event|safe}}; //get data from django
+    // console.log(event);
+    $(document).ready(function () {
+        
+        $('#calendar').fullCalendar({
+            customButtons: {
+                myCustomButton: {
+                    text: 'Add course to my plan',
+                    click: function () {
+                        alert('try to add course!');
+                    }
+                }
+            },
+            
+            header: {
+                left: 'prev,next today  myCustomButton',            //上一页、下一页、今天  
+                center: 'title',     //居中：时间范围区间标题  
+                right: 'month,agendaWeek,agendaDay,listWeek'    //右边：显示哪些视图  
+            },
+            firstDay: 1,           //视图从每周几开始，默认0为周日，1为周1，2为周2，依此类推  
+            noEventsMessage: "no event",   //listview视图下，无数据时显示提示  
+            weekNumbers: true,     //是否在视图左边显示这是第多少周，默认false  
+            //          businessHours : {}      //设置哪些时间段重点标记颜色  
+            eventLimit: true,       //数据条数太多时，限制各自里显示的数据条数（多余的以“+2more”格式显示），默认false不限制,支持输入数字设定固定的显示条数  
+            defaultDate: '2019-07-08',    //默认显示那一天的日期视图 
+            // weekNumberCalculationv:'ISO' ,
+            nowIndicator: true,            //
+            dayClick: function () {
+                alert('a day has been clicked!');
+            },
+            businessHours: [
+                {
+                    dow: [1, 2, 3,4,5], // 周一 - 周三
+                    start: '08:00', // 8am
+                    end: '16:00' // 6pm
+                },
+            ],
+            // events: [
+            //     {
+            //         title: 'Chess',
+            //         start: '2019-07-08',
+            //         end:  '2019-07-13'
+            //     },
+            //  ]
+            events:event
+        
+        });
+    });
+</script>
+
+</html>

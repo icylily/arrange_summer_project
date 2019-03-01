@@ -14,6 +14,40 @@
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <link href="{% static 'login_app/css/blog.css'%}" rel="stylesheet">
+<style>
+    body,
+    html {
+        height: 100%;
+
+        /* The image used */
+        /* background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(20).jpg"); */
+        background-image: url("{% static 'login_app/background2.jpg'%}");
+        /* Full height */
+
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+    }
+
+    .bg {
+        height: 100%;
+
+        /* The image used */
+        /* background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(20).jpg"); */
+        background-image: url("{% static 'login_app/background3.jpg'%}");
+        /* Full height */
+
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+    }
+</style>
 </head>
 
 <body class="bg-light">
@@ -74,7 +108,7 @@
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
             </form>
         </div>
-      
+      <a  class="ml-5 mt-3 pt-3" href="/">Back to user login </a>
     </div>     <!--end container -->
 
 </body>

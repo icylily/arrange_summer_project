@@ -180,4 +180,8 @@ def delete_course(request,course_id):
     return redirect("/admin/login_success")
 
 
+def import_course(request):
+    return render(request,"admin_app/import_courses.html")
+
+
 

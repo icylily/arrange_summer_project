@@ -13,7 +13,7 @@
   <!-- Custom styles for this template -->
   <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
   <link href="{% static 'login_app/css/blog.css'%}" rel="stylesheet">
-  <link href="dashboard.css" rel="stylesheet">
+  <link href="{% static 'login_app/css/dashboard.css'%}" rel="stylesheet">
 <style>
   body,
   html {
@@ -186,6 +186,7 @@
               {% csrf_token %}
               <button class="btn btn-primary btn-lg mb-3" type="submit">Add a course</button>
             </form>
+            &nbsp;&nbsp;<a class="btn btn-primary btn-lg mb-3" href="/admin/import_course">Import from a file</a>
           </div>
           {%elif request.session.source == "add_course"%}
           <!-- add course时显示内容 -->

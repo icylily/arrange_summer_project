@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap core CSS -->
+    {%load static%}
+    <link href="{% static 'login_app/css/bootstrap.min.css'%}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+    <link href="{% static 'login_app/css/blog.css'%}" rel="stylesheet">
+    <link href="{% static 'login_app/css/dashboard.css'%}" rel="stylesheet">
+    <style>
+        body,
+        html {
+            height: 100%;
+
+            /* The image used */
+            /* background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(20).jpg"); */
+            background-image: url("{% static 'login_app/background3.jpg'%}");
+            /* Full height */
+
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
+        }
+
+        .bg {
+            height: 100%;
+
+            /* The image used */
+            /* background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(20).jpg"); */
+            background-image: url("{% static 'login_app/background8.jpg'%}");
+            /* Full height */
+
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+{%if "logined" in request.session%}
+<!-- 判断用户是否已经合法登录。不合法登录的下面给出警告，不显示页面。 -->
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Welcome:&nbsp{{request.session.username}}</a>
+    <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/admin/login_success">Go back</a>
+            <a class="nav-link" href="/admin/logout">Sign out</a>
+
+        </li>
+    </ul>
+</nav>
+<div class= "row mt-5 m1-5 pt-5 pl-5">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="myfile">
+        <button type="submit">Upload</button>
+    </form>
+</div>
+
+{%else%}
+
+{%endif%}
+
+
+
+
+</body>
+</html>

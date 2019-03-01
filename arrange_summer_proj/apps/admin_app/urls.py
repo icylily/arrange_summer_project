@@ -17,5 +17,5 @@ urlpatterns = [
     url(r'^add_course$', views.add_course),
     url(r'^process/add_course$',views.process_add_course),
     url(r'^delete_course/(?P<course_id>\d+)$',views.delete_course),
-   
+    url(r'^import_course$', views.import_course),
 ]
